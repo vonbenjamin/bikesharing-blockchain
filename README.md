@@ -40,8 +40,25 @@ $ ./downloadFabric.sh
 
 
 ## 区块链本地部署：
-#### 1.启动本地服务器
-执行命令：
-#### 2.在浏览器输入：localhost:3100/即可进入网页    
+#### 1.启动Fabric
+```./startFabric.sh```
+#### 2.生成并导入PeerAdmin Card
+```./createPeerAdminCard.sh```
+#### 3.准备业务网络
+```yo hyperledger-composer:businessnetwork```
+#### 4.进入bikesharing-blockchain目录
+#### 5.生成.bna文件
+```composer archive create --sourceType dir --sourceName .```
+#### 6.部署业务网络bikesharing-network
+```composer network install --card PeerAdmin@hlfv1 --archiveFile bikesharing-network@0.0.1.bna```
+#### 7.启动业务网络
+```composer network start --networkName bikesharing-network --networkVersion 0.0.1 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file admin.card```
+#### 8.导入tutorial-network管理员Card
+```composer card import --file admin.card```
+#### 9.确认 tutorial-network 安装成功
+``` composer network ping -c admin@bikesharing-network```
+#### 10.启动REST Server
+```composer-rest-server --card admin@bikesharing-network --namespaces "never" --port 3100```
+#### 11.在浏览器输入：localhost:3100/exploree即可进入自行车共享网络  
 
 
